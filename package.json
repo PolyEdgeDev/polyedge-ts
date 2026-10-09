@@ -1,0 +1,60 @@
+{
+  "name": "polyedge",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Official TypeScript/Node.js SDK for PolyEdge ultra-low latency Polymarket mempool trade streaming and real-time on-chain analytics API.",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "test": "node --import tsx --test test/*.test.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "polymarket",
+    "polyedge",
+    "polymarket copy trading bot",
+    "polymarket trading bot",
+    "polymarket copy trade",
+    "polymarket smart money",
+    "polymarket smart traders",
+    "polymarket copy trading",
+    "polymarket mempool stream",
+    "polymarket pre-block trades",
+    "polymarket api",
+    "polymarket analytics"
+  ],
+  "author": {
+    "name": "PolyEdge Developer Support",
+    "email": "dev@polyedge.dev",
+    "url": "https://polyedge.dev"
+  },
+  "homepage": "https://polyedge.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PolyEdgeDev/polyedge-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PolyEdgeDev/polyedge-ts/issues"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  }
+}
