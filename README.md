@@ -1,6 +1,6 @@
 # PolyEdge TypeScript / Node.js SDK
 
-[![npm version](https://img.shields.io/npm/v/polyedge.svg?color=blue)](https://www.npmjs.com/package/polyedge)
+[![npm version](https://img.shields.io/npm/v/polyedge.svg?color=blue&cache=1)](https://www.npmjs.com/package/polyedge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-polyedge.dev-cyan)](https://polyedge.dev/docs)
 [![Benchmark](https://img.shields.io/badge/benchmark-100%2B_nodes-green)](https://github.com/PolyEdgeDev/polyedge-stream-benchmark)
