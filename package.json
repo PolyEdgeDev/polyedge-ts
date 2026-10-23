@@ -45,7 +45,7 @@
   "homepage": "https://polyedge.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PolyEdgeDev/polyedge-ts.git"
+    "url": "git+https://github.com/PolyEdgeDev/polyedge-ts.git"
   },
   "bugs": {
     "url": "https://github.com/PolyEdgeDev/polyedge-ts/issues"
