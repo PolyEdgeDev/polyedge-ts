@@ -1,6 +1,6 @@
 {
   "name": "polyedge",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Official TypeScript/Node.js SDK for PolyEdge ultra-low latency Polymarket mempool trade streaming and real-time on-chain analytics API.",
   "main": "dist/index.cjs",

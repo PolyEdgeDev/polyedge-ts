@@ -14,6 +14,8 @@ export interface ActiveSessionInfo {
   api_key?: string;
   /** Remote IP address of the connected client */
   client_ip?: string;
+  /** In-memory unique connection ID (prefixed with conn_) */
+  conn_id?: string;
   /** ISO 8601 timestamp when the SSE connection was established */
   connected_at?: string;
   /** Total active connection uptime in seconds */
@@ -52,15 +54,25 @@ export interface DeleteStreamResponse {
  * Data model for DepositItem
  */
 export interface DepositItem {
+  /** Trader's Ethereum wallet address */
   address?: string;
+  /** Total number of deposits within the 60-day window */
   deposit_count?: number;
-  /** Earliest deposit time in 60-day window (RFC3339) */
+  /** Earliest deposit timestamp in 60-day window (RFC3339 UTC) */
   first_deposit_at?: string;
+  /** First executed trade timestamp (RFC3339 UTC) */
   first_trade_at?: string;
-  /** Most recent deposit time (RFC3339) */
+  /** Most recent deposit timestamp (RFC3339 UTC) */
   last_deposit_at?: string;
+  /** Most recent executed trade timestamp (RFC3339 UTC) */
   last_trade_at?: string;
-  /** 6 decimals micro-USD integer as string (e.g. "100000000") */
+  /** Current pUSD wallet balance in micro-USD (6 decimals) */
+  pusd_balance?: number;
+  /** Net cumulative pUSD cashflow generated from trading activities (6 decimals) */
+  pusd_trade_balance?: number;
+  /** Up to 10 latest on-chain deposit transactions (newest first) */
+  recent_deposits?: RecentDeposit[];
+  /** Cumulative 60-day deposit amount in micro-USD (6 decimals) */
   total_deposit?: string;
 }
 
@@ -372,6 +384,20 @@ export interface QuoteSubscriptionResponse {
 }
 
 /**
+ * Data model for RecentDeposit
+ */
+export interface RecentDeposit {
+  /** Deposited collateral amount in micro-USD (6 decimals, e.g. 100000000 for 100 USDC) */
+  amount?: number;
+  /** Source funding address (0x...) */
+  from?: string;
+  /** Deposit execution timestamp in RFC3339 UTC format */
+  time?: string;
+  /** On-chain transaction hash (0x...) */
+  tx_hash?: string;
+}
+
+/**
  * Data model for SubscribeRequest
  */
 export interface SubscribeRequest {
@@ -513,9 +539,9 @@ export interface TraderProfileResponse {
   profile?: TraderIdentity;
   /** Trader's pUSD balance in micro-pUSD (6 decimals, e.g. 1000000 = 1 pUSD) */
   pusd_balance?: number;
-  /** Polymarket Taker Rebate Program tier level (0-6: 0=Tier 0, 1=Bronze, 2=Silver, 3=Gold, 4=Platinum, 5=Diamond, 6=Obsidian) */
+  /** Polymarket Taker Rebate tier level (0-6: 0=Tier 0, 1=Bronze, 2=Silver, 3=Gold, 4=Platinum, 5=Diamond, 6=Obsidian) */
   taker_tier?: number;
-  /** Descriptive taker rebate tier name ("Tier 0", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Obsidian", or empty string if unsynced) */
+  /** Descriptive taker rebate tier name ("Tier 0", "Bronze", "Silver", "Gold", "Platinum", "Diamond", "Obsidian", or "" if unsynced) */
   taker_tier_name?: string;
   /** Performance breakdown across top 5 categories in last 30 days */
   top_tags?: TagStat[];
@@ -584,6 +610,15 @@ export interface UserCreateStreamRequest {
   name?: string;
   series?: string[];
   tags?: string[];
+}
+
+/**
+ * Data model for UserDisconnectSessionResponse
+ */
+export interface UserDisconnectSessionResponse {
+  conn_id?: string;
+  message?: string;
+  status?: string;
 }
 
 /**
@@ -760,23 +795,6 @@ export interface UserUpdateStreamMetadataRequest {
 }
 
 /**
- * Data model for UserWithdrawRequest
- */
-export interface UserWithdrawRequest {
-  network: string;
-  to_address: string;
-  token: string;
-}
-
-/**
- * Data model for UserWithdrawResponse
- */
-export interface UserWithdrawResponse {
-  user?: UserProfile;
-  withdrawal?: Withdrawal;
-}
-
-/**
  * Data model for ValidatePromoCodeRequest
  */
 export interface ValidatePromoCodeRequest {
@@ -796,35 +814,4 @@ export interface ValidatePromoCodeResponse {
   original_price?: number;
   prorated_credit?: number;
   valid?: boolean;
-}
-
-/**
- * Data model for Withdrawal
- */
-export interface Withdrawal {
-  /** Full balance amount withdrawn in micro-USD */
-  amount?: number;
-  /** Withdrawal request creation timestamp */
-  created_at?: string;
-  id?: number;
-  /** User's most recent deposit timestamp */
-  last_deposit_at?: string;
-  /** "bsc" or "polygon" */
-  network?: string;
-  /** Reason recorded upon rejection */
-  reject_reason?: string;
-  /** Administrative review timestamp */
-  reviewed_at?: string;
-  /** "pending", "completed", "rejected" */
-  status?: string;
-  /** Destination EVM wallet address */
-  to_address?: string;
-  /** "USDC" or "USDT" */
-  token?: string;
-  /** Transaction hash on destination network */
-  tx_hash?: string;
-  /** Last modification timestamp */
-  updated_at?: string;
-  user_email?: string;
-  user_id?: number;
 }

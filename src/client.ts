@@ -112,6 +112,16 @@ export class StreamsService {
   }
 
   /**
+   * Disconnect User Stream Connection
+   * Terminates an active SSE stream connection owned by this account, identified by its conn_id from getActiveSessions.
+   * @param id Connection ID (conn_...)
+   * @returns Models.UserDisconnectSessionResponse
+   */
+  public async disconnectSession(id: string): Promise<Models.UserDisconnectSessionResponse> {
+    return this.request<Models.UserDisconnectSessionResponse>(this.streamBaseUrl, `/sessions/${id}`, { method: 'DELETE' });
+  }
+
+  /**
    * List User Stream Session History
    * Returns historical SSE connection logs including duration and pushed transactions count.
    * @param params.limit Max records to return
@@ -322,16 +332,6 @@ export class AccountService {
    */
   public async getTelemetry(): Promise<Models.UserTelemetryResponse> {
     return this.request<Models.UserTelemetryResponse>(this.apiBaseUrl, `/v2/user/telemetry`, { method: 'GET' });
-  }
-
-  /**
-   * Request Balance Withdrawal
-   * Submits a request to withdraw unspent USDC balance to a designated Polygon address.
-   * @param req Request payload
-   * @returns Models.UserWithdrawResponse
-   */
-  public async withdraw(req: Models.UserWithdrawRequest): Promise<Models.UserWithdrawResponse> {
-    return this.request<Models.UserWithdrawResponse>(this.apiBaseUrl, `/v2/user/withdraw`, { method: 'POST', body: JSON.stringify(req) });
   }
 
 }

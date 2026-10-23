@@ -130,6 +130,7 @@ console.log(`Today's requests: ${telemetry.total_requests}`);
 | `updateSubscription(id, req)` | `PUT /streams/{id}/subscription` | Hot-reload market filters (addresses, tags, series) on active stream |
 | `delete(id)` | `DELETE /streams/{id}` | Delete stream by ID |
 | `getActiveSessions()` | `GET /sessions` | List all active live SSE connections across streams |
+| `disconnectSession(connId)` | `DELETE /sessions/{id}` | Disconnect one of your active SSE connections by `conn_id` |
 | `getSessionHistory(params)` | `GET /sessions/history` | Query historical SSE connection logs and durations |
 
 ### 2. Analytics Service (`client.analytics`)
@@ -155,7 +156,6 @@ console.log(`Today's requests: ${telemetry.total_requests}`);
 | `deleteKey(key)` | `DELETE /v2/user/keys/{key}` | Revoke and delete an API key |
 | `getLedger(params)` | `GET /v2/user/ledger` | Balance ledger transaction records |
 | `getTelemetry()` | `GET /v2/user/telemetry` | Daily request count and per-endpoint usage telemetry |
-| `withdraw(req)` | `POST /v2/user/withdraw` | Request balance withdrawal |
 
 ### 4. Subscription Service (`client.subscription`)
 
